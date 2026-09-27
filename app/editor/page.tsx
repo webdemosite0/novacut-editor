@@ -21,7 +21,7 @@ export default function Editor(){
  const split=()=>{if(!active)return;const local=time-active.start;if(local<=.2||local>=active.duration-.2)return;const one={...active,duration:local};const two={...active,id:crypto.randomUUID(),name:active.name+' B',start:time,duration:active.duration-local};commit(clips.flatMap(c=>c.id===active.id?[one,two]:[c]));setSelected(two.id);flash('Clip split')};
  const remove=()=>{if(!active)return;commit(clips.filter(c=>c.id!==active.id));setSelected('');flash('Clip deleted')};
  const flash=(m:string)=>{setToast(m);setTimeout(()=>setToast(''),1200)};
- const save=()=>{localStorage.setItem('novacut-editor-state',JSON.stringify({clips,time,zoom,scale,rotation,opacity,exposure,contrast,saturation,volume}));flash('Project saved locally')};
+ const save=async()=>{const state=JSON.stringify({version:1,project:"Wanderlust",clips,time,zoom,scale,rotation,opacity,exposure,contrast,saturation,volume},null,2);localStorage.setItem('novacut-editor-state',state);const desktop=(window as any).novaDesktop;if(desktop?.saveProject){const path=await desktop.saveProject("Wanderlust",state);flash("Saved · "+path)}else flash("Project saved locally")};
  const toggle=()=>{const v=video.current;if(v&&src){if(v.paused){v.play();setPlaying(true)}else{v.pause();setPlaying(false)}}else setPlaying(p=>!p)};
  const importVideo=(e:ChangeEvent<HTMLInputElement>)=>{const f=e.target.files?.[0];if(!f)return;const u=URL.createObjectURL(f);setSrc(u);setFileName(f.name);setTime(0);flash('Media loaded')};
  const seek=(n:number)=>{const t=Math.max(0,Math.min(duration,n));setTime(t);if(video.current)video.current.currentTime=t};

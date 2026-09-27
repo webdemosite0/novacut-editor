@@ -3,8 +3,7 @@ name: Build NovaCut Desktop
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
+    branches: [main]
 
 permissions:
   contents: write
@@ -31,7 +30,6 @@ jobs:
       - name: Build desktop package
         run: npm run desktop:dist
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
       - uses: actions/upload-artifact@v4
         with:
@@ -39,9 +37,19 @@ jobs:
           path: release/*
           if-no-files-found: error
 
-      - name: Publish release assets
-        if: startsWith(github.ref, 'refs/tags/v')
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+      - name: Publish desktop release
         uses: softprops/action-gh-release@v2
         with:
-          files: release/*
+          tag_name: v0.2.0
+          name: NovaCut v0.2.0
+          prerelease: true
           generate_release_notes: true
+          files: release/*
