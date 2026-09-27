@@ -47,8 +47,8 @@ jobs:
       - name: Publish desktop release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v0.2.0
-          name: NovaCut v0.2.0
+          tag_name: v0.2.1
+          name: NovaCut v0.2.1
           prerelease: true
           generate_release_notes: true
           files: release/*

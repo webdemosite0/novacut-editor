@@ -1,7 +1,7 @@
 "use client";
 export default function DownloadSite(){
- const windows="https://github.com/webdemosite0/novacut-editor/releases/download/v0.2.0/NovaCut-Windows-Setup-0.2.0.exe";
- const mac="https://github.com/webdemosite0/novacut-editor/releases/download/v0.2.0/NovaCut-macOS-universal-0.2.0.dmg";
+ const windows="https://github.com/webdemosite0/novacut-editor/releases/download/v0.2.1/NovaCut-Windows-Setup-0.2.1.exe";
+ const mac="https://github.com/webdemosite0/novacut-editor/releases/download/v0.2.1/NovaCut-macOS-universal-0.2.1.dmg";
  return <main className="download-site">
   <nav className="download-nav"><a className="download-logo" href="/"><span>◆</span><b>NovaCut</b></a><div><a href="#features">Features</a><a href="https://github.com/webdemosite0/novacut-editor">GitHub</a></div></nav>
   <section className="download-hero">
