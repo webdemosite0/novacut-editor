@@ -1,21 +1,46 @@
 {
-  "name": "novacut-editor",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+  "name":"novacut-editor",
+  "version":"0.2.0",
+  "private":true,
+  "main":"desktop/main.cjs",
+  "scripts":{
+    "dev":"next dev",
+    "build":"next build",
+    "start":"next start",
+    "desktop:prepare":"cross-env NEXT_PUBLIC_DESKTOP_BUILD=1 next build",
+    "desktop":"npm run desktop:prepare && electron .",
+    "desktop:dist":"npm run desktop:prepare && electron-builder",
+    "desktop:dir":"npm run desktop:prepare && electron-builder --dir"
   },
-  "dependencies": {
-    "next": "16.3.6",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+  "dependencies":{
+    "next":"16.3.6",
+    "react":"19.2.0",
+    "react-dom":"19.2.0"
   },
-  "devDependencies": {
-    "@types/node": "24.10.0",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "typescript": "5.9.3"
+  "devDependencies":{
+    "@types/node":"24.10.0",
+    "@types/react":"19.2.2",
+    "@types/react-dom":"19.2.2",
+    "cross-env":"10.1.0",
+    "electron":"39.2.6",
+    "electron-builder":"26.0.12",
+    "typescript":"5.9.3"
+  },
+  "build":{
+    "appId":"com.novacut.editor",
+    "productName":"NovaCut",
+    "asar":true,
+    "files":["desktop/**/*","out/**/*","package.json"],
+    "directories":{"output":"release"},
+    "win":{
+      "target":[{"target":"nsis","arch":["x64"]}],
+      "artifactName":"NovaCut-Windows-Setup-${version}.${ext}"
+    },
+    "nsis":{"oneClick":false,"allowToChangeInstallationDirectory":true,"createDesktopShortcut":true,"createStartMenuShortcut":true},
+    "mac":{
+      "target":[{"target":"dmg","arch":["universal"]}],
+      "category":"public.app-category.video",
+      "artifactName":"NovaCut-macOS-${arch}-${version}.${ext}"
+    }
   }
 }
