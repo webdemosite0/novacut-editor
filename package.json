@@ -9,7 +9,7 @@
     "start":"next start",
     "desktop:prepare":"cross-env NEXT_PUBLIC_DESKTOP_BUILD=1 next build",
     "desktop":"npm run desktop:prepare && electron .",
-    "desktop:dist":"npm run desktop:prepare && electron-builder",
+    "desktop:dist":"npm run desktop:prepare && electron-builder --publish never",
     "desktop:dir":"npm run desktop:prepare && electron-builder --dir"
   },
   "dependencies":{
